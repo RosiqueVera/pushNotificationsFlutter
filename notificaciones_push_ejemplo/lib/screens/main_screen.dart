@@ -18,12 +18,14 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    FireBaseServices.messageStream.listen(
-      (msg) {
-        log('Message: $msg');
-      },
-    );
+    FireBaseServices.messageStream.listen(_changeTitle);
+    FireBaseServices.bodySteam.listen(_changeBody);
+    FireBaseServices.dataStream.listen(_changeData);
   }
+
+  _changeTitle(String msg) => setState(() => titleNotification = msg);
+  _changeBody(String msg) => setState(() => bodyNotification = msg);
+  _changeData(dynamic msg) => setState(() => bodydata = msg.toString());
 
   @override
   Widget build(BuildContext context) {
