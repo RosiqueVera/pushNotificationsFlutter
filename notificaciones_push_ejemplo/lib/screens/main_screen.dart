@@ -9,9 +9,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
   String titleNotification = 'Sin titulo';
-  String bodyNotification  = 'Sin body';
+  String bodyNotification = 'Sin body';
   String bodydata = 'Sin data';
 
   @override
@@ -20,19 +19,40 @@ class _MainScreenState extends State<MainScreen> {
     final FireBaseServices fireservices = FireBaseServices();
     fireservices.setNotification();
     fireservices.streamCtlr.stream.listen(_changeData);
-    fireservices.bodyCtlr.stream.listen(_changeData);
-    fireservices.titleCtlr.stream.listen(_changeData);
+    fireservices.bodyCtlr.stream.listen(_changeBody);
+    fireservices.titleCtlr.stream.listen(_changeTitle);
   }
-  
-  _changeData(String msg) => setState(() => bodydata = msg, );
-  _changeBody(String msg) => setState(() => bodyNotification = msg, );
-  _changeTitle(String msg) => setState(() => titleNotification = msg, );
+
+  _changeData(String msg) => setState(
+        () => bodydata = msg,
+      );
+  _changeBody(String msg) => setState(
+        () => bodyNotification = msg,
+      );
+  _changeTitle(String msg) => setState(
+        () => titleNotification = msg,
+      );
 
   @override
   Widget build(BuildContext context) {
-
-     
-
-    return Scaffold();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Text>[
+            Text(
+              'Titulo: $titleNotification',
+            ),
+            Text(
+              'body: $bodyNotification',
+            ),
+            Text(
+              'data: $bodydata',
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
