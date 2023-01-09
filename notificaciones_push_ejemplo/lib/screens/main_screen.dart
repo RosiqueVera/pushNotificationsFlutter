@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:notificaciones_push_ejemplo/services/firebase.dart';
 
@@ -16,22 +18,12 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    final FireBaseServices fireservices = FireBaseServices();
-    fireservices.setNotification();
-    fireservices.streamCtlr.stream.listen(_changeData);
-    fireservices.bodyCtlr.stream.listen(_changeBody);
-    fireservices.titleCtlr.stream.listen(_changeTitle);
+    FireBaseServices.messageStream.listen(
+      (msg) {
+        log('Message: $msg');
+      },
+    );
   }
-
-  _changeData(String msg) => setState(
-        () => bodydata = msg,
-      );
-  _changeBody(String msg) => setState(
-        () => bodyNotification = msg,
-      );
-  _changeTitle(String msg) => setState(
-        () => titleNotification = msg,
-      );
 
   @override
   Widget build(BuildContext context) {
